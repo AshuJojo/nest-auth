@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { HelloWorldModule } from './modules/hello-world/hello-world.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
+
 
 @Module({
   imports: [
@@ -9,16 +12,24 @@ import { AppService } from './app.service';
       envFilePath: ((process.env.NODE_ENV?.trim() === 'production') ? '.env' : '.env.dev'),
       isGlobal: true
     }),
+    MongooseModule.forRoot(
+      process.env.DB_URI,
+      {
+        dbName: process.env.DB_NAME
+      }
+    ),
+    HelloWorldModule,
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {
   constructor(private configService: ConfigService) { this.getEnv() }
 
   getEnv() {
-    console.log("Env Variable: ", process.env.NODE_ENV);
-    console.log("Config Service: ", this.configService.get<string>('NODE_ENV'));
-    console.log("Using enviornment File: ", (process.env.NODE_ENV?.trim() === 'production') ? '.env' : '.env.dev')
+    console.log("Enviornment Service: ", this.configService.get<string>('NODE_ENV'));
+    console.log("Using enviornment File: ", (process.env.NODE_ENV?.trim() === 'production') ? '.env' : '.env.dev');
   }
 }

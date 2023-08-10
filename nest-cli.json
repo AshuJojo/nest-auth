@@ -4,5 +4,14 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true
-  }
+  },
+  "generateOptions": {
+    "spec": false
+  },
+  "generateResources": [
+    "modules/"
+  ],
+  "generateMiddlewares": [
+    "middlewares/**/*.middleware.ts"
+  ]
 }

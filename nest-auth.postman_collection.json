@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "fccce310-5a55-4927-8320-9aec0939ca54",
+		"name": "nest-auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4613199",
+		"_collection_link": "https://solar-shadow-256932.postman.co/workspace/jojo~e865378f-ca98-4069-a184-a15ca5f712a7/collection/4613199-fccce310-5a55-4927-8320-9aec0939ca54?action=share&creator=4613199&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "nest-auth-check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{USERS_URL}}",
+							"host": [
+								"{{USERS_URL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{USERS_URL}}/64d4afe174b3edfcb1b0e6fa",
+							"host": [
+								"{{USERS_URL}}"
+							],
+							"path": [
+								"64d4afe174b3edfcb1b0e6fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateNewUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashu99.jnp@gmail.com\",\r\n    \"password\": \"jojo@12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{USERS_URL}}",
+							"host": [
+								"{{USERS_URL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashutosh@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{USERS_URL}}/64d4b01174b3edfcb1b0e703",
+							"host": [
+								"{{USERS_URL}}"
+							],
+							"path": [
+								"64d4b01174b3edfcb1b0e703"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{USERS_URL}}/64d4afe174b3edfcb1b0e6fa",
+							"host": [
+								"{{USERS_URL}}"
+							],
+							"path": [
+								"64d4afe174b3edfcb1b0e6fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ashu99.jnp@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{USERS_URL}}/email",
+							"host": [
+								"{{USERS_URL}}"
+							],
+							"path": [
+								"email"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashutosh@gmail.com\",\r\n    \"password\": \"jojo12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}/login",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckAuth",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRiMDExNzRiM2VkZmNiMWIwZTcwMyIsImVtYWlsIjoiYXNodXRvc2hAZ21haWwuY29tIiwiaWF0IjoxNjkxNzQxMTc2LCJleHAiOjE2OTE3NDEyMzZ9.gKL370RqQatbouPcrSoXlgfsaV5rIacX0TRVx5tR-o4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{AUTH_URL}}/me",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "USERS_URL",
+			"value": "http://localhost:5000/users",
+			"type": "string"
+		},
+		{
+			"key": "AUTH_URL",
+			"value": "http://localhost:5000/auth",
+			"type": "string"
+		}
+	]
+}

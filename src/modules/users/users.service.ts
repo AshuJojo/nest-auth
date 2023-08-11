@@ -22,17 +22,21 @@ export class UsersService {
         }
     }
 
-    async findAll() {
+    async getUsers() {
         return await this.userModel.find();
     }
 
-    async findOne(id: string) {
+    async getUserById(id: string) {
         const user = await this.userModel.findById(id);
 
         if (!user)
             throw new Error("No User Found")
 
         return user;
+    }
+
+    async getUserByEmail(email: string) {
+        return await this.userModel.findOne({ email });
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {

@@ -8,7 +8,7 @@ export class User {
     @Prop({ type: SchemaTypes.ObjectId })
     id: Types.ObjectId;
 
-    @Prop({ type: SchemaTypes.String })
+    @Prop({ type: SchemaTypes.String, unique: true })
     email: string;
 
     @Prop({ type: SchemaTypes.String })

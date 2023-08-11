@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { HelloWorldModule } from './modules/hello-world/hello-world.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -18,7 +17,6 @@ import { MongooseModule } from '@nestjs/mongoose';
         dbName: process.env.DB_NAME
       }
     ),
-    HelloWorldModule,
     AuthModule,
     UsersModule,
   ],

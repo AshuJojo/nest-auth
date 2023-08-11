@@ -1,17 +1,19 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
-import { AuthGuard } from './auth.guard';
+import { LocalAuthGuard } from './gaurds/local-auth.guard';
 
 import { AuthService } from './auth.service';
-import { Public } from './auth.decorator';
+import { JwtGaurd } from './gaurds/jwt.guard';
+import { Public } from './decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Public()
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Body() singInDto: Record<string, any>) {
-    return this.authService.validateUser(singInDto.email, singInDto.password);
+  async login(@Request() req) {
+    return this.authService.login(req.user);
   }
 
   @Get('/me')

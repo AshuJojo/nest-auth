@@ -9,7 +9,8 @@ export class CreateUserDto {
     @MinLength(3, { message: "Minimum password length is 3." })
     password: string;
 
-    @IsEnum(Role)
+    @IsEnum(Role, { each: true })
     @IsOptional()
     roles: Role[];
+
 }

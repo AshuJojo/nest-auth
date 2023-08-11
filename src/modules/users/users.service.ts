@@ -39,7 +39,7 @@ export class UsersService {
         return await this.userModel.findOne({ email });
     }
 
-    async update(id: string, updateUserDto: UpdateUserDto) {
+    async updateUser(id: string, updateUserDto: UpdateUserDto) {
         try {
             const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto)
             return await this.userModel.findById(id)
@@ -48,7 +48,7 @@ export class UsersService {
         }
     }
 
-    async remove(id: string) {
+    async removeUser(id: string) {
         try {
             const deletedUser = await this.userModel.findByIdAndDelete(id);
             return deletedUser;

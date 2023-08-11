@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 import { SignUpDto } from './dto/signUp.dto';
 import { UsersService } from '../users/users.service';
+import { Role } from './enum/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     }
 
     async loginUser(user: any) {
-        const payload = { email: user.email, id: user._id };
+        const payload = { email: user.email, id: user._id, roles: user.roles };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
@@ -35,7 +36,7 @@ export class AuthService {
                 throw new Error('Password Does not match.')
 
             const hashedPassword = await bcrypt.hash(password, 10)
-            const user = await this.userService.createUser({ email, password: hashedPassword });
+            const user = await this.userService.createUser({ email, password: hashedPassword, roles: [Role.User] });
 
             const res = { email: user.email, userId: user._id };
 

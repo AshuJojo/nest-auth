@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,7 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  
+
   @Post()
   create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
@@ -25,17 +25,17 @@ export class UsersController {
 
   // Should Be Deleted or fixed letter
   @Post('email')
-  findOneByEmail(@Body() body: Object){
+  findOneByEmail(@Body() body: Object) {
     return this.usersService.getUserByEmail(body['email']);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body(new ValidationPipe) updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+    return this.usersService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+    return this.usersService.removeUser(id);
   }
 }

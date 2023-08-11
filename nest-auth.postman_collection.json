@@ -29,6 +29,16 @@
 				{
 					"name": "GetAllUsers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaHU5OS5qbnBAZ21haWwuY29tIiwiaWQiOiI2NGQ0YjA0Yzc0YjNlZGZjYjFiMGU3MGIiLCJpYXQiOjE2OTE3NTk4NTQsImV4cCI6MTY5MTc2MzQ1NH0.sEX2ZQGXh-MUlesDZ7ebF7Rrb_k0H2-kukIBEiNbe4g",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -60,11 +70,14 @@
 				{
 					"name": "CreateNewUser",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"ashu99.jnp@gmail.com\",\r\n    \"password\": \"jojo@12345\"\r\n}",
+							"raw": "{\r\n    \"email\": \"jojo@gmail.com\",\r\n    \"password\": \"jojo@12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -161,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"ashutosh@gmail.com\",\r\n    \"password\": \"jojo12345\"\r\n}",
+							"raw": "{\r\n    \"email\": \"ashu@gmail.com\",\r\n    \"password\": \"jojo@jojo\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -188,7 +201,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRiMDExNzRiM2VkZmNiMWIwZTcwMyIsImVtYWlsIjoiYXNodXRvc2hAZ21haWwuY29tIiwiaWF0IjoxNjkxNzQxMTc2LCJleHAiOjE2OTE3NDEyMzZ9.gKL370RqQatbouPcrSoXlgfsaV5rIacX0TRVx5tR-o4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaHVAZ21haWwuY29tIiwiaWQiOiI2NGQ2ODRlNjcyMTI0OTUxNGE2OGIzZTciLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTY5MTc4MTc1MiwiZXhwIjoxNjkxNzg1MzUyfQ.5wiMH5EGq8g7jlg28MSz5hK9evnD-8or0WstWqcRWLI",
 									"type": "string"
 								}
 							]
@@ -202,6 +215,32 @@
 							],
 							"path": [
 								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashu@gmail.com\",\r\n    \"password\": \"jojo@jojo\",\r\n    \"confirmPassword\": \"jojo@jojo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}/signup",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								"signup"
 							]
 						}
 					},

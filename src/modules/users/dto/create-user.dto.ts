@@ -1,4 +1,6 @@
-import { IsEmail, MinLength } from 'class-validator';
+import { IsEnum } from '@nestjs/class-validator';
+import { IsEmail, IsOptional, MinLength } from 'class-validator';
+import { Role } from 'src/modules/auth/enum/role.enum';
 
 export class CreateUserDto {
     @IsEmail({}, { message: 'Please enter correct email address.' })
@@ -6,4 +8,8 @@ export class CreateUserDto {
 
     @MinLength(3, { message: "Minimum password length is 3." })
     password: string;
+
+    @IsEnum(Role)
+    @IsOptional()
+    roles: Role[];
 }

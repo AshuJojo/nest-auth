@@ -10,6 +10,7 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtGaurd } from './gaurds/jwt.guard';
+import { RolesGaurd } from './gaurds/roles.gaurd';
 
 
 @Module({
@@ -34,9 +35,14 @@ import { JwtGaurd } from './gaurds/jwt.guard';
         LocalStrategy,
         JwtStrategy,
         {
-            // Provide Auth Gaurd to complete application
+            // Provide JWT Gaurd to complete application
             provide: APP_GUARD,
-            useClass: JwtGaurd,
+            useClass: JwtGaurd
+        },
+        {
+            // Provide Roles Gaurd to complete application
+            provide: APP_GUARD,
+            useClass: RolesGaurd
         },
     ],
 

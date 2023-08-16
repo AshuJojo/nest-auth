@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RouteInteractionMiddleware } from './middlewares/RouteInteraction.middleware';
 
 
 @Module({
@@ -23,7 +24,13 @@ import { MongooseModule } from '@nestjs/mongoose';
   controllers: [],
   providers: [],
 })
-export class AppModule {
+export class AppModule implements NestModule {
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RouteInteractionMiddleware)
+      .forRoutes('auth'); // Update with the appropriate controller path
+  }
   constructor(private configService: ConfigService) { this.getEnv() }
 
   getEnv() {

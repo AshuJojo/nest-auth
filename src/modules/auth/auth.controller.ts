@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request, ValidationPipe, Param } from '@nestjs/common';
 
 import { LocalAuthGuard } from './gaurds/local-auth.guard';
 import { AuthService } from './auth.service';
@@ -6,6 +6,8 @@ import { Public } from './decorators/auth.decorator';
 import { SignUpDto } from './dto/signUp.dto';
 import { Roles } from './decorators/roles.decorator';
 import { Role } from './enum/role.enum';
+import { EmailVerificationDto } from './dto/emailVerificationDto';
+import { ResetPasswordDto } from './dto/resetPasswordDto';
 
 @Controller('auth')
 export class AuthController {
@@ -25,9 +27,22 @@ export class AuthController {
         return this.authService.signUpUser(signUpDto);
     }
 
-    @Get('logout')
-    logout() {
+    @Public()
+    @Get('verify-email/:token')
+    async verifyEmail(@Param('token') verificationToken: string) {
+        return this.authService.verifyUserEmail(verificationToken);
+    }
 
+    @Public()
+    @Post('resend-email-verification')
+    async resendEmailVerification(@Body(ValidationPipe) emailVerificationDto: EmailVerificationDto) {
+        console.log('Email: ', emailVerificationDto.email);
+        return this.authService.resendEmailVerification(emailVerificationDto.email);
+    }
+
+    @Post('reset-password')
+    async resetPassword(@Request() req, @Body(ValidationPipe) resetPasswordDto: ResetPasswordDto) {
+        return this.authService.resetPassword(req.user, resetPasswordDto);
     }
 
     @Get('me')

@@ -4,6 +4,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RouteInteractionMiddleware } from './middlewares/RouteInteraction.middleware';
+import { MailModule } from './modules/mail/mail.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { RouteInteractionMiddleware } from './middlewares/RouteInteraction.middl
     ),
     AuthModule,
     UsersModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

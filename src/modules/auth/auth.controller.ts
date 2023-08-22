@@ -6,8 +6,8 @@ import { Public } from './decorators/auth.decorator';
 import { SignUpDto } from './dto/signUp.dto';
 import { Roles } from '../roles/roles.decorator';
 import { RoleEnum } from '../roles/role.enum';
-import { EmailVerificationDto } from './dto/emailVerificationDto';
-import { ResetPasswordDto } from './dto/resetPasswordDto';
+import { EmailDto } from './dto/email.dto';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,14 +35,21 @@ export class AuthController {
 
     @Public()
     @Post('resend-email-verification')
-    async resendEmailVerification(@Body(ValidationPipe) emailVerificationDto: EmailVerificationDto) {
-        console.log('Email: ', emailVerificationDto.email);
-        return this.authService.resendEmailVerification(emailVerificationDto.email);
+    async resendEmailVerification(@Body(ValidationPipe) emailDto: EmailDto) {
+        console.log('Email: ', emailDto.email);
+        return this.authService.resendEmailVerification(emailDto.email);
     }
 
-    @Post('reset-password')
-    async resetPassword(@Request() req, @Body(ValidationPipe) resetPasswordDto: ResetPasswordDto) {
-        return this.authService.resetPassword(req.user, resetPasswordDto);
+    @Public()
+    @Post('forgot-password')
+    async forgotPassword(@Body(ValidationPipe) emailDto: EmailDto) {
+        return this.authService.forgotPassword(emailDto.email)
+    }
+
+    @Public()
+    @Post('reset-password/:token')
+    async resetPassword(@Param('token') token: string, @Body(ValidationPipe) resetPasswordDto: ResetPasswordDto) {
+        return this.authService.resetPassword(token, resetPasswordDto);
     }
 
     @Get('me')

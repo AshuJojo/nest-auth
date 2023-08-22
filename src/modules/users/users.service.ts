@@ -37,25 +37,31 @@ export class UsersService {
 
     // Get all users from database
     async getUsers() {
-        try {
-            const users = await this.userModel.find();
-            const processedUsers = users.map(user => {
+        const users = await this.userModel.find()
+            .catch(error => {
+                console.error('getUsers(): ', error);
+                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS);
+            });
+        const processedUsers = users
+            .map(user => {
                 if (!user) {
                     return [];
                 }
                 const { password, ...res } = user.toObject();
                 return res;
             });
-            return processedUsers;
-        } catch (error) {
-            throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS);
-        }
+        return processedUsers;
+
     }
 
 
     // Get user with id
     async getUserById(id: string) {
-        const user = await this.userModel.findById(id);
+        const user = await this.userModel.findById(id)
+            .catch(error => {
+                console.log('getUserById(): ', error)
+                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS)
+            });
 
         if (!user) {
             throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
@@ -67,6 +73,10 @@ export class UsersService {
     // Get user by email
     async getUserByEmail(email: string) {
         const user = await this.userModel.findOne({ email: email.toLowerCase() })
+            .catch((error) => {
+                console.log('getUserByEmail(): ', error)
+                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS)
+            })
 
         if (!user)
             throw new NotFoundException(Constants.ErrorMessages.EMAIL_NOT_FOUND)
@@ -83,31 +93,32 @@ export class UsersService {
 
             return { _id, email }
         } catch (error) {
+            console.error('updateUser(): ', error)
+            
             if (error instanceof CastError) {
                 throw new BadRequestException(Constants.ErrorMessages.INVALID_ID_FORMAT);
             } else if (error instanceof TypeError) {
                 throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
-            } else {
-                console.error('Error during updateUser operation:', error);
-                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_UPDATE_USER);
             }
+
+            throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_UPDATE_USER);
         }
     }
 
     // delete a user from database
     async removeUser(id: string) {
-        try {
-            const { _id, email } = await this.userModel.findByIdAndDelete(id);
-            return { _id, email };
-        } catch (error) {
-            if (error instanceof CastError) {
-                throw new BadRequestException(Constants.ErrorMessages.INVALID_ID_FORMAT);
-            } else if (error instanceof TypeError) {
-                throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
-            } else {
-                console.error('Error during updateUser operation:', error);
+        const { _id, email } = await this.userModel.findByIdAndDelete(id)
+            .catch(error => {
+                console.error('removeUser(): ', error)
+                if (error instanceof CastError) {
+                    throw new BadRequestException(Constants.ErrorMessages.INVALID_ID_FORMAT);
+                } else if (error instanceof TypeError) {
+                    throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
+                }
+                console.error('Error during removeUser operation:', error);
                 throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_DELETE_USER);
-            }
-        }
+            });
+        return { _id, email };
+
     }
 }

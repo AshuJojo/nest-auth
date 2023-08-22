@@ -4,6 +4,6 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(((new ConfigService()).get<string>('PORT') || 3000));
+  await app.listen(((new ConfigService()).get<string>('BACKEND_PORT') || 3000));
 }
 bootstrap();

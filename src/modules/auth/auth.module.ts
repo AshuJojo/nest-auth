@@ -11,6 +11,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtGaurd } from './gaurds/jwt.guard';
 import { RolesGaurd } from '../roles/roles.gaurds';
+import { MailModule } from '../mail/mail.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { RolesGaurd } from '../roles/roles.gaurds';
             }),
             inject: [ConfigService],
         }),
+        MailModule,
 
         UsersModule,
         PassportModule

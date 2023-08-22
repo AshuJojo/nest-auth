@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } fro
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -22,10 +23,9 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
-  // Should Be Deleted or fixed letter
   @Post('email')
-  findOneByEmail(@Body() body: Object) {
-    return this.usersService.getUserByEmail(body['email']);
+  findOneByEmail(@Body() userDto: UserDto) {
+    return this.usersService.getUserByEmail(userDto.email);
   }
 
   @Patch(':id')

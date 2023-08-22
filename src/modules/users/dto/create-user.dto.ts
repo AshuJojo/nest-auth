@@ -1,15 +1,17 @@
-import { IsEnum } from '@nestjs/class-validator';
-import { IsEmail, IsOptional, MinLength } from 'class-validator';
-import { Role } from 'src/modules/auth/enum/role.enum';
+import { IsEnum, IsEmail, IsOptional, IsString, MaxLength, MinLength } from '@nestjs/class-validator';
+import { Constants } from 'src/constants/constants';
+import { RoleEnum } from 'src/modules/roles/role.enum';
 
 export class CreateUserDto {
-    @IsEmail({}, { message: 'Please enter correct email address.' })
+    @IsEmail({}, { message: Constants.ErrorMessages.INVALID_EMAIL})
     email: string;
 
-    @MinLength(3, { message: "Minimum password length is 3." })
+    @IsString()
+    @MinLength(4, { message: Constants.ErrorMessages.MIN_PASSWORD})
+    @MaxLength(15, { message: Constants.ErrorMessages.MAX_PASSWORD })
     password: string;
 
-    @IsEnum(Role, { each: true })
+    @IsEnum(RoleEnum, { each: true })
     @IsOptional()
-    roles?: Role[];
+    roles?: RoleEnum[];
 }

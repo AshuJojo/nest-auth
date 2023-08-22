@@ -1,9 +1,10 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsBoolean, IsOptional } from '@nestjs/class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-    @IsNumber()
-    isActive?: Number;
+    @IsBoolean()
+    @IsOptional()
+    isActive?: boolean;
 
 }

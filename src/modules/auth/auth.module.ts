@@ -10,7 +10,7 @@ import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtGaurd } from './gaurds/jwt.guard';
-import { RolesGaurd } from './gaurds/roles.gaurd';
+import { RolesGaurd } from '../roles/roles.gaurds';
 
 
 @Module({

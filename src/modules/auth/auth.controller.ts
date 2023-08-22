@@ -4,8 +4,8 @@ import { LocalAuthGuard } from './gaurds/local-auth.guard';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/auth.decorator';
 import { SignUpDto } from './dto/signUp.dto';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from './enum/role.enum';
+import { Roles } from '../roles/roles.decorator';
+import { RoleEnum } from '../roles/role.enum';
 import { EmailVerificationDto } from './dto/emailVerificationDto';
 import { ResetPasswordDto } from './dto/resetPasswordDto';
 
@@ -50,13 +50,13 @@ export class AuthController {
         return req.user;
     }
 
-    @Roles(Role.Admin)
+    @Roles(RoleEnum.Admin)
     @Get('check-admin')
     checkAdminRole() {
         return 'Admin Role working'
     }
 
-    @Roles(Role.User)
+    @Roles(RoleEnum.User)
     @Get('check-user')
     checkUserRole() {
         return 'User Role working'

@@ -1,13 +1,16 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { Constants } from "src/constants/constants";
 
 export class SignUpDto {
-    @IsEmail({}, { message: 'Please enter correct email address.' })
-    @IsNotEmpty({ message: 'All fields are required.' })
+    @IsEmail({}, { message: Constants.errorMessages.INVALID_EMAIL })
+    @IsNotEmpty({ message: Constants.errorMessages.ALL_FIELDS_REQUIRED })
     email: string;
 
-    @IsNotEmpty({ message: 'All fields are required.' })
+    @IsString()
+    @IsNotEmpty({ message: Constants.errorMessages.ALL_FIELDS_REQUIRED })
     password: string;
 
-    @IsNotEmpty({ message: 'All fields are required.' })
+    @IsString()
+    @IsNotEmpty({ message: Constants.errorMessages.ALL_FIELDS_REQUIRED })
     confirmPassword: string;
 }

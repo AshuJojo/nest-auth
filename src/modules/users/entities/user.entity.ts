@@ -35,7 +35,7 @@ export const UserSchema = SchemaFactory.createForClass(User);
 // called before saving a user in database
 UserSchema.pre('save', async function (next) {
     try {
-        if (!this.isModified(Constants.Attributes.PASSWORD)) {
+        if (!this.isModified(Constants.attributes.PASSWORD)) {
             return next();
         }
         const hashedPassword = await bcrypt.hash(this.password, 10);

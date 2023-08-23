@@ -1,13 +1,14 @@
 import { IsNotEmpty, IsString, MaxLength, MinLength } from "@nestjs/class-validator";
+import { Constants } from "src/constants/constants";
 
 export class ResetPasswordDto {
     @IsString()
-    @MinLength(4, { message: "Minimum password length is 4." })
-    @MaxLength(15, { message: "Maximum password length is 15." })
-    @IsNotEmpty({message: 'All fields are required.'})
+    @MinLength(4, { message: Constants.errorMessages.MIN_PASSWORD })
+    @MaxLength(15, { message: Constants.errorMessages.MAX_PASSWORD })
+    @IsNotEmpty({message: Constants.errorMessages.ALL_FIELDS_REQUIRED})
     password: string;
 
     @IsString()
-    @IsNotEmpty({message: 'All fields are required.'})
+    @IsNotEmpty({message: Constants.errorMessages.ALL_FIELDS_REQUIRED})
     confirmPassword: string;
 }

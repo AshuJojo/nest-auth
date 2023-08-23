@@ -3,12 +3,12 @@ import { Constants } from 'src/constants/constants';
 import { RoleEnum } from 'src/modules/roles/role.enum';
 
 export class CreateUserDto {
-    @IsEmail({}, { message: Constants.ErrorMessages.INVALID_EMAIL})
+    @IsEmail({}, { message: Constants.errorMessages.INVALID_EMAIL})
     email: string;
 
     @IsString()
-    @MinLength(4, { message: Constants.ErrorMessages.MIN_PASSWORD})
-    @MaxLength(15, { message: Constants.ErrorMessages.MAX_PASSWORD })
+    @MinLength(4, { message: Constants.errorMessages.MIN_PASSWORD})
+    @MaxLength(15, { message: Constants.errorMessages.MAX_PASSWORD })
     password: string;
 
     @IsEnum(RoleEnum, { each: true })

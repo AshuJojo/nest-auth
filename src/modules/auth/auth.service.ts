@@ -1,7 +1,6 @@
 import {
     Injectable,
     BadRequestException,
-    NotFoundException,
     InternalServerErrorException,
     ConflictException,
     UnauthorizedException
@@ -14,7 +13,6 @@ import { JsonWebTokenError } from 'jsonwebtoken'
 
 import { SignUpDto } from './dto/signUp.dto';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/entities/user.entity';
 import { ResetPasswordDto } from './dto/resetPassword.dto';
 import { Constants } from 'src/constants/constants';
 import { MailService } from '../mail/mail.service';
@@ -55,14 +53,14 @@ export class AuthService {
         const { email, password, confirmPassword } = signUpDto;
 
         if (password !== confirmPassword)
-            throw new BadRequestException(Constants.ErrorMessages.PASSWORD_MISMATCH)
+            throw new BadRequestException(Constants.errorMessages.PASSWORD_MISMATCH)
 
         const user = await this.userService.createUser({ email, password })
             .catch((error) => {
                 console.error('signUpUser(): ', error)
                 if (error instanceof ConflictException)
                     throw error
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED)
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED)
             });
         console.log("User: ", user);
 
@@ -70,7 +68,7 @@ export class AuthService {
 
         this.mailService.sendEmailVerificationMail(email, token);
 
-        return { message: 'User signed up successfully!' };
+        return { message: Constants.messages.USER_SIGNUP_SUCCESS };
     }
 
     // Resend User Email Verification Mail
@@ -81,7 +79,7 @@ export class AuthService {
         // Send Mail
         this.mailService.sendEmailVerificationMail(email, token)
 
-        return { message: 'Email sent successfully!' };
+        return { message: Constants.messages.EMAIL_SENT_SUCCESS };
     }
 
     // Verify User Email with email verification token
@@ -96,7 +94,7 @@ export class AuthService {
                 if (error instanceof CastError || error instanceof TypeError)
                     throw error
 
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED)
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED)
             })
 
         console.log('Token Verified: ', updatedUser);
@@ -119,7 +117,7 @@ export class AuthService {
             })
             .catch((error) => {
                 console.error(error)
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED);
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED);
             })
         console.log('Email Verification Token: ', token)
 
@@ -138,9 +136,9 @@ export class AuthService {
                 console.error(error);
 
                 if (error instanceof JsonWebTokenError)
-                    throw new UnauthorizedException(Constants.ErrorMessages.JWT_TOKEN_EXPIRED)
+                    throw new UnauthorizedException(Constants.errorMessages.JWT_TOKEN_EXPIRED)
 
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED);
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED);
             });
 
         return user;
@@ -165,7 +163,7 @@ export class AuthService {
         const { password, confirmPassword } = resetPasswordDto;
 
         if (password !== confirmPassword) {
-            throw new BadRequestException(Constants.ErrorMessages.PASSWORD_MISMATCH);
+            throw new BadRequestException(Constants.errorMessages.PASSWORD_MISMATCH);
         }
 
         // Update User Password
@@ -175,12 +173,12 @@ export class AuthService {
                 if (error instanceof CastError || error instanceof TypeError)
                     throw error
 
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED);
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED);
             })
 
         console.log(updatedUser);
 
-        return { message: 'Password reset successful!' };
+        return { message: Constants.messages.RESET_PASSWORD_SUCCESS };
     }
 
     // Method to verify Reset Password Token
@@ -194,9 +192,9 @@ export class AuthService {
                 console.error(error);
 
                 if (error instanceof JsonWebTokenError)
-                    throw new UnauthorizedException(Constants.ErrorMessages.JWT_TOKEN_EXPIRED)
+                    throw new UnauthorizedException(Constants.errorMessages.JWT_TOKEN_EXPIRED)
 
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED);
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED);
             });
 
         return user;
@@ -216,7 +214,7 @@ export class AuthService {
                 secret: this.configService.get<string>('JWT_RESET_PASSWORD_SECRET'),
                 expiresIn: '1d',
             }).catch(error => {
-                throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED);
+                throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED);
             });
         console.log('Reset Password Token: ', token);
 

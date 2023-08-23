@@ -1,10 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer/dist';
-import { User } from '../users/entities/user.entity';
-import { UserDto } from '../users/dto/user.dto';
 import { ConfigService } from '@nestjs/config';
 import { Constants } from 'src/constants/constants';
-import { error } from 'console';
 
 @Injectable()
 export class MailService {
@@ -25,7 +22,7 @@ export class MailService {
             })
         } catch (error) {
             console.error(error)
-            throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED)
+            throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED)
         }
     }
 
@@ -41,7 +38,7 @@ export class MailService {
             }
         }).catch((error) => {
             console.error(error)
-            throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED)
+            throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED)
         })
     }
 
@@ -59,7 +56,7 @@ export class MailService {
             }
         }).catch((error) => {
             console.error(error)
-            throw new InternalServerErrorException(Constants.ErrorMessages.SOME_ERROR_OCCURRED)
+            throw new InternalServerErrorException(Constants.errorMessages.SOME_ERROR_OCCURRED)
         })
     }
 }

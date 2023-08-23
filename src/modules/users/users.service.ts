@@ -29,9 +29,9 @@ export class UsersService {
             return res;
         } catch (error) {
             if (error.code === 11000)
-                throw new ConflictException(Constants.ErrorMessages.EMAIL_CONFLICT);
+                throw new ConflictException(Constants.errorMessages.EMAIL_CONFLICT);
 
-            throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_CREATE_USER);
+            throw new InternalServerErrorException(Constants.errorMessages.FAILED_CREATE_USER);
         }
     }
 
@@ -40,7 +40,7 @@ export class UsersService {
         const users = await this.userModel.find()
             .catch(error => {
                 console.error('getUsers(): ', error);
-                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS);
+                throw new InternalServerErrorException(Constants.errorMessages.FAILED_FETCH_USERS);
             });
         const processedUsers = users
             .map(user => {
@@ -60,11 +60,11 @@ export class UsersService {
         const user = await this.userModel.findById(id)
             .catch(error => {
                 console.log('getUserById(): ', error)
-                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS)
+                throw new InternalServerErrorException(Constants.errorMessages.FAILED_FETCH_USERS)
             });
 
         if (!user) {
-            throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
+            throw new NotFoundException(Constants.errorMessages.USER_NOT_FOUND);
         }
 
         return user;
@@ -75,11 +75,11 @@ export class UsersService {
         const user = await this.userModel.findOne({ email: email.toLowerCase() })
             .catch((error) => {
                 console.log('getUserByEmail(): ', error)
-                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_FETCH_USERS)
+                throw new InternalServerErrorException(Constants.errorMessages.FAILED_FETCH_USERS)
             })
 
         if (!user)
-            throw new NotFoundException(Constants.ErrorMessages.EMAIL_NOT_FOUND)
+            throw new NotFoundException(Constants.errorMessages.EMAIL_NOT_FOUND)
 
         return user;
     }
@@ -96,12 +96,12 @@ export class UsersService {
             console.error('updateUser(): ', error)
             
             if (error instanceof CastError) {
-                throw new BadRequestException(Constants.ErrorMessages.INVALID_ID_FORMAT);
+                throw new BadRequestException(Constants.errorMessages.INVALID_ID_FORMAT);
             } else if (error instanceof TypeError) {
-                throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
+                throw new NotFoundException(Constants.errorMessages.USER_NOT_FOUND);
             }
 
-            throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_UPDATE_USER);
+            throw new InternalServerErrorException(Constants.errorMessages.FAILED_UPDATE_USER);
         }
     }
 
@@ -111,12 +111,12 @@ export class UsersService {
             .catch(error => {
                 console.error('removeUser(): ', error)
                 if (error instanceof CastError) {
-                    throw new BadRequestException(Constants.ErrorMessages.INVALID_ID_FORMAT);
+                    throw new BadRequestException(Constants.errorMessages.INVALID_ID_FORMAT);
                 } else if (error instanceof TypeError) {
-                    throw new NotFoundException(Constants.ErrorMessages.USER_NOT_FOUND);
+                    throw new NotFoundException(Constants.errorMessages.USER_NOT_FOUND);
                 }
                 console.error('Error during removeUser operation:', error);
-                throw new InternalServerErrorException(Constants.ErrorMessages.FAILED_DELETE_USER);
+                throw new InternalServerErrorException(Constants.errorMessages.FAILED_DELETE_USER);
             });
         return { _id, email };
 

@@ -24,8 +24,8 @@ import { MailModule } from '../mail/mail.module';
             }),
             inject: [ConfigService],
         }),
+        
         MailModule,
-
         UsersModule,
         PassportModule
     ],
